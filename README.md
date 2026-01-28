@@ -8,10 +8,16 @@ A collection of tools, scripts, and documentation for AI agent automation. This 
 |-------|-------------|
 | [Agent Guidelines](docs/agent-guidelines.md) | **Best practices** for problem-solving, sub-agents, model selection |
 | [Headless Browser Setup](docs/headless-browser-setup.md) | **Complete guide** to Chrome + Clawdbot Browser Relay on Xvfb |
+| [Sophie Voice Bridge](docs/sophie-voice-bridge.md) | **Voice calls** with Sophie via ElevenLabs + WhatsApp |
 | [ZoomClick Tool](docs/zoomclick.md) | AI-friendly iterative zoom-and-click for UI automation |
 | [VClick Tool](docs/vclick.md) | Vision-based clicking and template matching |
 
 ## 🛠️ Tools Included
+
+### Voice & Communication
+| Tool | Description | GitHub |
+|------|-------------|--------|
+| **sophie-voice-bridge** | ElevenLabs Custom LLM for WhatsApp voice calls with Sophie | [sophie-voice-bridge](https://github.com/aaron777collins/sophie-voice-bridge) |
 
 ### Screen Interaction
 | Tool | Description | GitHub |
