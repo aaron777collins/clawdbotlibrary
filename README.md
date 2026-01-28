@@ -6,6 +6,7 @@ A collection of tools, scripts, and documentation for AI agent automation. This 
 
 | Guide | Description |
 |-------|-------------|
+| [Agent Guidelines](docs/agent-guidelines.md) | **Best practices** for problem-solving, sub-agents, model selection |
 | [Headless Browser Setup](docs/headless-clawdbot-extension-browser.md) | **Complete guide** to Chrome + Clawdbot Browser Relay on Xvfb |
 | [ZoomClick Tool](docs/zoomclick.md) | AI-friendly iterative zoom-and-click for UI automation |
 | [VClick Tool](docs/vclick.md) | Vision-based clicking and template matching |
