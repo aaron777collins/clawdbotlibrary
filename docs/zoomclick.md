@@ -2,6 +2,8 @@
 
 > Iterative zoom-and-click tool for precise UI element targeting. Instead of guessing pixel coordinates, progressively zoom until your target is big and centered.
 
+**GitHub Repository:** https://github.com/aaron777collins/EnhanceAndClick
+
 ## 🎯 Why ZoomClick?
 
 When an AI looks at a screenshot, small UI elements (like toolbar icons) are hard to pinpoint. ZoomClick solves this by:
@@ -25,10 +27,17 @@ When an AI looks at a screenshot, small UI elements (like toolbar icons) are har
 sudo apt install -y imagemagick xdotool python3-pip
 
 # Install Python dependencies
-pip install pyautogui opencv-python numpy
+pip install pyautogui opencv-python numpy pillow
 
-# The zoomclick.py script should be in your PATH
-# Or run directly: python3 /path/to/zoomclick.py
+# Clone the repository
+git clone https://github.com/aaron777collins/EnhanceAndClick.git ~/tools/zoomclick
+cd ~/tools/zoomclick
+
+# Create template storage
+mkdir -p ~/.zoomclick/templates
+
+# Optional: Add to PATH
+sudo ln -sf $(pwd)/zoomclick.py /usr/local/bin/zoomclick
 ```
 
 ## 📖 Basic Usage
@@ -234,5 +243,5 @@ ZoomClick outputs JSON for easy parsing:
 
 ## See Also
 
-- [Headless Browser Setup](headless-clawdbot-extension-browser.md)
+- [Headless Browser Setup](headless-browser-setup.md)
 - [VClick Documentation](vclick.md)

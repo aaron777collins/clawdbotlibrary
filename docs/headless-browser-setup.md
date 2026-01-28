@@ -181,10 +181,10 @@ cd ~
 git clone https://github.com/aaron777collins/vclick.git
 
 # Or if you have it locally, copy it:
-# cp -r /path/to/vclick ~/vclick
+# cp -r /path/to/vclick ~/tools/vclick
 
 # Verify it works
-cd ~/vclick
+cd ~/tools/vclick
 python3 vclick.py --help
 ```
 
@@ -196,16 +196,16 @@ cd ~
 git clone https://github.com/aaron777collins/EnhanceAndClick.git zoomclick
 
 # Or copy from clawdbot tools:
-# cp -r ~/clawd/tools/zoomclick ~/zoomclick
+# cp -r ~/clawd/tools/zoomclick ~/tools/zoomclick
 
 # Create symlink for easy access
-sudo ln -sf ~/zoomclick/zoomclick.py /usr/local/bin/zoomclick
+sudo ln -sf ~/tools/zoomclick/zoomclick.py /usr/local/bin/zoomclick
 
 # Create templates directory
 mkdir -p ~/.zoomclick/templates
 
 # Verify it works
-cd ~/zoomclick
+cd ~/tools/zoomclick
 python3 zoomclick.py --help
 ```
 
@@ -213,23 +213,23 @@ python3 zoomclick.py --help
 
 ## Step 5: Create the Startup Script
 
-Create `/home/ubuntu/start-chrome-automation.sh`:
+Create `$HOME/start-chrome-automation.sh`:
 
 ```bash
-cat > /home/ubuntu/start-chrome-automation.sh << 'SCRIPT_EOF'
+cat > $HOME/start-chrome-automation.sh << 'SCRIPT_EOF'
 #!/bin/bash
 # Chrome Automation Startup Script (Robust Version)
 # Starts Xvfb + Fluxbox + Chrome with proper daemonization
 
 DISPLAY_NUM=":99"
 DEBUG_PORT=9222
-USER_DATA_DIR="/home/ubuntu/.chrome-automation"
+USER_DATA_DIR="$HOME/.chrome-automation"
 LOG_DIR="/tmp"
 EXTENSION_COORDS="1752 32"  # Clawdbot extension icon location (fallback)
 
 # Path to tools - adjust these if your installation differs
-ZOOMCLICK_PATH="$HOME/zoomclick/zoomclick.py"
-VCLICK_PATH="$HOME/vclick/vclick.py"
+ZOOMCLICK_PATH="$HOME/tools/zoomclick/zoomclick.py"
+VCLICK_PATH="$HOME/tools/vclick/vclick.py"
 
 log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
@@ -419,14 +419,14 @@ main "$@"
 SCRIPT_EOF
 
 # Make it executable
-chmod +x /home/ubuntu/start-chrome-automation.sh
+chmod +x $HOME/start-chrome-automation.sh
 ```
 
 ### Verify Script Created
 
 ```bash
-ls -la /home/ubuntu/start-chrome-automation.sh
-head -20 /home/ubuntu/start-chrome-automation.sh
+ls -la $HOME/start-chrome-automation.sh
+head -20 $HOME/start-chrome-automation.sh
 ```
 
 ---
@@ -440,13 +440,13 @@ Add to crontab:
 crontab -e
 
 # Add this line:
-@reboot /home/ubuntu/start-chrome-automation.sh >> /tmp/chrome-automation.log 2>&1
+@reboot $HOME/start-chrome-automation.sh >> /tmp/chrome-automation.log 2>&1
 ```
 
 Or use this one-liner:
 
 ```bash
-(crontab -l 2>/dev/null | grep -v "start-chrome-automation"; echo "@reboot /home/ubuntu/start-chrome-automation.sh >> /tmp/chrome-automation.log 2>&1") | crontab -
+(crontab -l 2>/dev/null | grep -v "start-chrome-automation"; echo "@reboot $HOME/start-chrome-automation.sh >> /tmp/chrome-automation.log 2>&1") | crontab -
 ```
 
 ### Verify Crontab
@@ -464,7 +464,7 @@ After starting Chrome for the first time, you need to capture the extension icon
 ### Start Chrome First
 
 ```bash
-/home/ubuntu/start-chrome-automation.sh
+$HOME/start-chrome-automation.sh
 ```
 
 ### Take a Screenshot
@@ -481,7 +481,7 @@ The extension icon is typically in the top-right corner of Chrome's toolbar. You
 2. **Use zoomclick interactively** to find it:
 
 ```bash
-cd ~/zoomclick
+cd ~/tools/zoomclick
 DISPLAY=:99 python3 zoomclick.py --start
 # Analyze the screenshot, zoom in to the extension icon
 DISPLAY=:99 python3 zoomclick.py --zoom top-right
@@ -492,7 +492,7 @@ DISPLAY=:99 python3 zoomclick.py --save "clawdbot_extension"
 
 ### Or Manually Crop the Icon
 
-If you know the coordinates (typically around x=1740, y=20 for a 1920x1080 screen):
+If you know the coordinates (typically around x=1752, y=32 for a 1920x1080 screen):
 
 ```bash
 # Crop the extension icon (adjust coordinates as needed)
@@ -502,7 +502,7 @@ convert /tmp/full_screen.png -crop 24x24+1740+20 +repage ~/.zoomclick/templates/
 cat > ~/.zoomclick/templates/clawdbot_extension.json << 'EOF'
 {
   "name": "clawdbot_extension",
-  "image": "/home/ubuntu/.zoomclick/templates/clawdbot_extension.png",
+  "image": "$HOME/.zoomclick/templates/clawdbot_extension.png",
   "center_x": 1752,
   "center_y": 32,
   "notes": "Template for Clawdbot Browser Relay extension icon (inactive state)"
@@ -544,7 +544,7 @@ browser action=tabs profile=chrome
 Should return a list of tabs. If empty, the extension needs to be clicked:
 
 ```bash
-DISPLAY=:99 python3 ~/zoomclick/zoomclick.py --click "clawdbot_extension"
+DISPLAY=:99 python3 ~/tools/zoomclick/zoomclick.py --click "clawdbot_extension"
 ```
 
 ### Test 4: Navigate and Screenshot
@@ -584,14 +584,14 @@ browser action=act profile=chrome request='{"kind": "type", "ref": "textbox \"Se
 
 ```bash
 # Click the extension to re-attach
-DISPLAY=:99 python3 ~/zoomclick/zoomclick.py --click "clawdbot_extension"
+DISPLAY=:99 python3 ~/tools/zoomclick/zoomclick.py --click "clawdbot_extension"
 ```
 
 ### If Chrome Crashes
 
 ```bash
 # Restart everything
-/home/ubuntu/start-chrome-automation.sh
+$HOME/start-chrome-automation.sh
 ```
 
 ### Take Manual Screenshots
@@ -614,7 +614,7 @@ DISPLAY=:99 scrot /tmp/screenshot.png
 
 **Solution:**
 ```bash
-DISPLAY=:99 python3 ~/zoomclick/zoomclick.py --click "clawdbot_extension"
+DISPLAY=:99 python3 ~/tools/zoomclick/zoomclick.py --click "clawdbot_extension"
 sleep 2
 browser action=tabs profile=chrome
 ```
@@ -655,7 +655,7 @@ convert /tmp/debug.png -crop 24x24+NEW_X+NEW_Y +repage ~/.zoomclick/templates/cl
 ```bash
 python3 << 'EOF'
 import json
-prefs_file = '/home/ubuntu/.chrome-automation/Default/Preferences'
+prefs_file = '$HOME/.chrome-automation/Default/Preferences'
 try:
     with open(prefs_file, 'r') as f:
         prefs = json.load(f)
@@ -686,8 +686,8 @@ disown
 
 | File | Purpose |
 |------|---------|
-| `/home/ubuntu/start-chrome-automation.sh` | Main startup script |
-| `/home/ubuntu/.chrome-automation/` | Chrome user data directory |
+| `$HOME/start-chrome-automation.sh` | Main startup script |
+| `$HOME/.chrome-automation/` | Chrome user data directory |
 | `~/.zoomclick/templates/clawdbot_extension.png` | Extension icon template |
 | `~/.zoomclick/templates/clawdbot_extension.json` | Template metadata |
 | `~/.clawdbot/browser/chrome-extension/` | Browser Relay extension files |
@@ -695,8 +695,8 @@ disown
 | `/tmp/fluxbox.log` | Fluxbox logs |
 | `/tmp/chrome.log` | Chrome logs |
 | `/tmp/chrome-automation.log` | Startup script logs |
-| `~/vclick/vclick.py` | Vision click tool |
-| `~/zoomclick/zoomclick.py` | Zoom and click tool |
+| `~/tools/vclick/vclick.py` | Vision click tool |
+| `~/tools/zoomclick/zoomclick.py` | Zoom and click tool |
 
 ---
 
@@ -706,7 +706,7 @@ disown
 ┌─────────────────────────────────────────────────────────────┐
 │                 CLAWDBOT BROWSER QUICK REF                  │
 ├─────────────────────────────────────────────────────────────┤
-│ START:     /home/ubuntu/start-chrome-automation.sh          │
+│ START:     $HOME/start-chrome-automation.sh          │
 │ CHECK:     browser action=tabs profile=chrome               │
 │ NAVIGATE:  browser action=navigate profile=chrome           │
 │            targetUrl="https://example.com"                  │

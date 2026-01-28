@@ -36,14 +36,14 @@ cp start-chrome-automation.sh ~/
 chmod +x ~/start-chrome-automation.sh
 
 # Set up auto-start on boot
-(crontab -l 2>/dev/null | grep -v "start-chrome-automation"; echo "@reboot /home/ubuntu/start-chrome-automation.sh >> /tmp/chrome-automation.log 2>&1") | crontab -
+(crontab -l 2>/dev/null | grep -v "start-chrome-automation"; echo "@reboot $HOME/start-chrome-automation.sh >> /tmp/chrome-automation.log 2>&1") | crontab -
 ```
 
 ### Usage
 
 ```bash
 # Start manually
-/home/ubuntu/start-chrome-automation.sh
+$HOME/start-chrome-automation.sh
 
 # Check if running
 pgrep -a Xvfb && echo "Xvfb OK"
@@ -61,7 +61,7 @@ Edit the script to change these variables:
 ```bash
 DISPLAY_NUM=":99"           # Virtual display number
 DEBUG_PORT=9222             # Chrome DevTools port
-USER_DATA_DIR="/home/ubuntu/.chrome-automation"   # Chrome profile location
+USER_DATA_DIR="$HOME/.chrome-automation"   # Chrome profile location
 EXTENSION_COORDS="1752 32"  # Fallback coordinates for extension icon
 ```
 
@@ -91,12 +91,12 @@ DISPLAY=:99 google-chrome --no-sandbox --disable-gpu "about:blank" &
 ls -la ~/.zoomclick/templates/clawdbot_extension.*
 
 # Try manual click
-DISPLAY=:99 python3 ~/zoomclick/zoomclick.py --click "clawdbot_extension"
+DISPLAY=:99 python3 ~/tools/zoomclick/zoomclick.py --click "clawdbot_extension"
 ```
 
 **Processes die after SSH disconnect:**
 The script uses proper daemonization. If running manually, use:
 ```bash
-nohup /home/ubuntu/start-chrome-automation.sh > /tmp/startup.log 2>&1 &
+nohup $HOME/start-chrome-automation.sh > /tmp/startup.log 2>&1 &
 disown
 ```

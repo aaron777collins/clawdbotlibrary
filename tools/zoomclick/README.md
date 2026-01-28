@@ -10,10 +10,10 @@ sudo apt install -y python3-pip python3-opencv scrot xdotool
 pip3 install pyautogui pillow numpy
 
 # Copy to your preferred location
-cp zoomclick.py ~/zoomclick.py
+# Clone to ~/tools/zoomclick instead
 
 # Optional: create symlink for easy access
-sudo ln -sf ~/zoomclick.py /usr/local/bin/zoomclick
+sudo ln -sf ~/tools/zoomclick/zoomclick.py /usr/local/bin/zoomclick
 
 # Create templates directory
 mkdir -p ~/.zoomclick/templates
