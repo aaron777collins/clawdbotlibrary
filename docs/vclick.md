@@ -135,4 +135,4 @@ DISPLAY=:99 vclick -c 750 420 --type "search query"
 ## See Also
 
 - [ZoomClick Documentation](zoomclick.md) - For iterative zoom navigation
-- [Headless Browser Setup](headless-clawdbot-extension-browser.md)
+- [Headless Browser Setup](headless-browser-setup.md)

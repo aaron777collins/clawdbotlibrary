@@ -6,7 +6,7 @@ A collection of tools, scripts, and documentation for AI agent automation. This 
 
 | Guide | Description |
 |-------|-------------|
-| [Headless Browser Setup](docs/headless-clawdbot-extension-browser.md) | **Complete guide** to Chrome + Clawdbot Browser Relay on Xvfb |
+| [Headless Browser Setup](docs/headless-browser-setup.md) | **Complete guide** to Chrome + Clawdbot Browser Relay on Xvfb |
 | [ZoomClick Tool](docs/zoomclick.md) | AI-friendly iterative zoom-and-click for UI automation |
 | [VClick Tool](docs/vclick.md) | Vision-based clicking and template matching |
 
@@ -19,7 +19,7 @@ A collection of tools, scripts, and documentation for AI agent automation. This 
 | **vclick** | Direct coordinate clicking with vision support | [vclick](https://github.com/aaron777collins/vclick) |
 
 ### Browser Automation
-- **start-chrome-xvfb.sh** - Launch Chrome with Clawdbot extension on virtual display
+- **start-chrome-automation.sh** - Launch Chrome with Clawdbot extension on virtual display
 - Chrome DevTools integration via port 9222
 
 ## 🚀 Quick Start (Fresh Server)
@@ -29,32 +29,33 @@ A collection of tools, scripts, and documentation for AI agent automation. This 
 git clone https://github.com/aaron777collins/clawdbotlibrary.git
 cd clawdbotlibrary
 
-# 2. Run the full setup script
-./scripts/setup-all.sh
+# 2. Run the full setup script (as root for system deps)
+sudo ./scripts/setup-all.sh
 
 # 3. Start Chrome with browser automation
-./scripts/start-chrome-xvfb.sh
+$HOME/start-chrome-automation.sh
 
 # 4. Test it works
-DISPLAY=:99 import -window root /tmp/test.png
+DISPLAY=:99 scrot /tmp/test.png
+curl -s http://localhost:9222/json/version
 ```
 
 ## 📁 Repository Structure
 
 ```
 clawdbotlibrary/
-├── README.md                 # This file
+├── README.md                       # This file
 ├── docs/
-│   ├── headless-clawdbot-extension-browser.md  # Full browser setup guide
-│   ├── zoomclick.md          # ZoomClick documentation
-│   └── vclick.md             # VClick documentation
+│   ├── headless-browser-setup.md   # Full browser setup guide
+│   ├── zoomclick.md                # ZoomClick documentation
+│   └── vclick.md                   # VClick documentation
 ├── scripts/
-│   ├── setup-all.sh          # One-command full setup
-│   ├── start-chrome-xvfb.sh  # Chrome launcher for Xvfb
-│   └── install-deps.sh       # Install system dependencies
+│   ├── setup-all.sh                # One-command full setup
+│   ├── start-chrome-automation.sh  # Chrome launcher for Xvfb
+│   └── install-deps.sh             # Install system dependencies
 └── tools/
-    ├── zoomclick/            # ZoomClick source
-    └── vclick/               # VClick source
+    ├── zoomclick/                  # ZoomClick source
+    └── vclick/                     # VClick source
 ```
 
 ## 🔧 Requirements
@@ -63,15 +64,16 @@ clawdbotlibrary/
 - Python 3.10+
 - Xvfb for headless display
 - Chrome browser
-- ImageMagick (for screenshots)
+- scrot (for screenshots)
 
 ## 📖 For AI Agents
 
 If you're an AI model reading this:
-1. Start with [Headless Browser Setup](docs/headless-clawdbot-extension-browser.md) for complete instructions
+1. Start with [Headless Browser Setup](docs/headless-browser-setup.md) for complete instructions
 2. Use `zoomclick` for finding and clicking UI elements
 3. Always start fluxbox BEFORE Chrome on Xvfb
-4. Use `import -window root` instead of `scrot` for Chrome screenshots
+4. Use `scrot` for screenshots on display :99
+5. Extension icon coords fallback: `1752, 32`
 
 ## 🤝 Contributing
 

@@ -1,13 +1,17 @@
 #!/bin/bash
 # Chrome Automation Startup Script (Robust Version)
 # Starts Xvfb + Fluxbox + Chrome with proper daemonization
-# Docs: ~/clawd/docs/chrome-automation-setup.md
+# GitHub: https://github.com/aaron777collins/clawdbotlibrary
 
 DISPLAY_NUM=":99"
 DEBUG_PORT=9222
 USER_DATA_DIR="$HOME/.chrome-automation"
 LOG_DIR="/tmp"
 EXTENSION_COORDS="1752 32"  # Clawdbot extension icon location (fallback coordinates)
+
+# Tool paths - adjust if you installed elsewhere
+ZOOMCLICK_PATH="$HOME/tools/zoomclick/zoomclick.py"
+VCLICK_PATH="$HOME/tools/vclick/vclick.py"
 
 log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
@@ -109,10 +113,20 @@ click_extension() {
     log "Clicking Clawdbot extension icon..."
     export DISPLAY=$DISPLAY_NUM
     
+    # Check if zoomclick is available
+    if [ ! -f "$ZOOMCLICK_PATH" ]; then
+        log "zoomclick not found at $ZOOMCLICK_PATH, using fallback coords"
+        if [ -f "$VCLICK_PATH" ]; then
+            python3 "$VCLICK_PATH" --coords $EXTENSION_COORDS 2>/dev/null || true
+        else
+            log "⚠ Neither zoomclick nor vclick found - extension may need manual clicking"
+        fi
+        return 0
+    fi
+    
     # Check if extension is already active by looking for "ON" state
     if [ -f ~/.zoomclick/templates/clawdbot_extension_active.png ]; then
-        cd ~/clawd/tools/zoomclick
-        RESULT=$(python3 zoomclick.py --click "clawdbot_extension_active" --no-click 2>/dev/null || true)
+        RESULT=$(python3 "$ZOOMCLICK_PATH" --click "clawdbot_extension_active" --no-click 2>/dev/null || true)
         CONFIDENCE=$(echo "$RESULT" | grep -o '"confidence": [0-9.]*' | grep -o '[0-9.]*' || echo "0")
         if [ "$(echo "$CONFIDENCE > 0.8" | bc -l 2>/dev/null || echo 0)" = "1" ]; then
             log "✓ Extension already active (detected ON state with confidence $CONFIDENCE)"
@@ -123,14 +137,13 @@ click_extension() {
     # Try zoomclick template first (for inactive state)
     if [ -f ~/.zoomclick/templates/clawdbot_extension.png ]; then
         log "Using zoomclick template for extension click"
-        cd ~/clawd/tools/zoomclick
-        RESULT=$(python3 zoomclick.py --click "clawdbot_extension" --no-click 2>/dev/null || true)
+        RESULT=$(python3 "$ZOOMCLICK_PATH" --click "clawdbot_extension" --no-click 2>/dev/null || true)
         CONFIDENCE=$(echo "$RESULT" | grep -o '"confidence": [0-9.]*' | grep -o '[0-9.]*' || echo "0")
         
         # Only use template match if confidence is high enough
         if [ "$(echo "$CONFIDENCE > 0.7" | bc -l 2>/dev/null || echo 0)" = "1" ]; then
             log "Template found with confidence $CONFIDENCE, clicking..."
-            python3 zoomclick.py --click "clawdbot_extension" 2>/dev/null
+            python3 "$ZOOMCLICK_PATH" --click "clawdbot_extension" 2>/dev/null
             log "✓ Extension clicked via template matching"
             return 0
         else
@@ -140,7 +153,9 @@ click_extension() {
     
     # Fall back to vclick with hardcoded coordinates
     log "Falling back to vclick coordinates ($EXTENSION_COORDS)"
-    python3 ~/clawd/tools/vclick/vclick.py --coords $EXTENSION_COORDS 2>/dev/null || true
+    if [ -f "$VCLICK_PATH" ]; then
+        python3 "$VCLICK_PATH" --coords $EXTENSION_COORDS 2>/dev/null || true
+    fi
     sleep 1
 }
 
@@ -184,7 +199,7 @@ main() {
     log ""
     log "Screenshot: DISPLAY=$DISPLAY_NUM scrot /tmp/screenshot.png"
     log "Zoomclick:  DISPLAY=$DISPLAY_NUM zoomclick --start"
-    log "Browser:    browser action=screenshot profile=sophie"
+    log "Browser:    browser action=tabs profile=chrome"
     log ""
     log "Startup complete."
 }

@@ -91,7 +91,7 @@ DISPLAY=:99 google-chrome --no-sandbox --disable-gpu "about:blank" &
 ls -la ~/.zoomclick/templates/clawdbot_extension.*
 
 # Try manual click
-DISPLAY=:99 python3 ~/zoomclick/zoomclick.py --click "clawdbot_extension"
+DISPLAY=:99 python3 ~/tools/zoomclick/zoomclick.py --click "clawdbot_extension"
 ```
 
 **Processes die after SSH disconnect:**

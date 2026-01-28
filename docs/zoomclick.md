@@ -243,5 +243,5 @@ ZoomClick outputs JSON for easy parsing:
 
 ## See Also
 
-- [Headless Browser Setup](headless-clawdbot-extension-browser.md)
+- [Headless Browser Setup](headless-browser-setup.md)
 - [VClick Documentation](vclick.md)

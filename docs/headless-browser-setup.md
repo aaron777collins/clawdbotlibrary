@@ -181,10 +181,10 @@ cd ~
 git clone https://github.com/aaron777collins/vclick.git
 
 # Or if you have it locally, copy it:
-# cp -r /path/to/vclick ~/vclick
+# cp -r /path/to/vclick ~/tools/vclick
 
 # Verify it works
-cd ~/vclick
+cd ~/tools/vclick
 python3 vclick.py --help
 ```
 
@@ -196,16 +196,16 @@ cd ~
 git clone https://github.com/aaron777collins/EnhanceAndClick.git zoomclick
 
 # Or copy from clawdbot tools:
-# cp -r ~/clawd/tools/zoomclick ~/zoomclick
+# cp -r ~/clawd/tools/zoomclick ~/tools/zoomclick
 
 # Create symlink for easy access
-sudo ln -sf ~/zoomclick/zoomclick.py /usr/local/bin/zoomclick
+sudo ln -sf ~/tools/zoomclick/zoomclick.py /usr/local/bin/zoomclick
 
 # Create templates directory
 mkdir -p ~/.zoomclick/templates
 
 # Verify it works
-cd ~/zoomclick
+cd ~/tools/zoomclick
 python3 zoomclick.py --help
 ```
 
@@ -228,8 +228,8 @@ LOG_DIR="/tmp"
 EXTENSION_COORDS="1752 32"  # Clawdbot extension icon location (fallback)
 
 # Path to tools - adjust these if your installation differs
-ZOOMCLICK_PATH="$HOME/zoomclick/zoomclick.py"
-VCLICK_PATH="$HOME/vclick/vclick.py"
+ZOOMCLICK_PATH="$HOME/tools/zoomclick/zoomclick.py"
+VCLICK_PATH="$HOME/tools/vclick/vclick.py"
 
 log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
@@ -481,7 +481,7 @@ The extension icon is typically in the top-right corner of Chrome's toolbar. You
 2. **Use zoomclick interactively** to find it:
 
 ```bash
-cd ~/zoomclick
+cd ~/tools/zoomclick
 DISPLAY=:99 python3 zoomclick.py --start
 # Analyze the screenshot, zoom in to the extension icon
 DISPLAY=:99 python3 zoomclick.py --zoom top-right
@@ -492,7 +492,7 @@ DISPLAY=:99 python3 zoomclick.py --save "clawdbot_extension"
 
 ### Or Manually Crop the Icon
 
-If you know the coordinates (typically around x=1740, y=20 for a 1920x1080 screen):
+If you know the coordinates (typically around x=1752, y=32 for a 1920x1080 screen):
 
 ```bash
 # Crop the extension icon (adjust coordinates as needed)
@@ -544,7 +544,7 @@ browser action=tabs profile=chrome
 Should return a list of tabs. If empty, the extension needs to be clicked:
 
 ```bash
-DISPLAY=:99 python3 ~/zoomclick/zoomclick.py --click "clawdbot_extension"
+DISPLAY=:99 python3 ~/tools/zoomclick/zoomclick.py --click "clawdbot_extension"
 ```
 
 ### Test 4: Navigate and Screenshot
@@ -584,7 +584,7 @@ browser action=act profile=chrome request='{"kind": "type", "ref": "textbox \"Se
 
 ```bash
 # Click the extension to re-attach
-DISPLAY=:99 python3 ~/zoomclick/zoomclick.py --click "clawdbot_extension"
+DISPLAY=:99 python3 ~/tools/zoomclick/zoomclick.py --click "clawdbot_extension"
 ```
 
 ### If Chrome Crashes
@@ -614,7 +614,7 @@ DISPLAY=:99 scrot /tmp/screenshot.png
 
 **Solution:**
 ```bash
-DISPLAY=:99 python3 ~/zoomclick/zoomclick.py --click "clawdbot_extension"
+DISPLAY=:99 python3 ~/tools/zoomclick/zoomclick.py --click "clawdbot_extension"
 sleep 2
 browser action=tabs profile=chrome
 ```
@@ -695,8 +695,8 @@ disown
 | `/tmp/fluxbox.log` | Fluxbox logs |
 | `/tmp/chrome.log` | Chrome logs |
 | `/tmp/chrome-automation.log` | Startup script logs |
-| `~/vclick/vclick.py` | Vision click tool |
-| `~/zoomclick/zoomclick.py` | Zoom and click tool |
+| `~/tools/vclick/vclick.py` | Vision click tool |
+| `~/tools/zoomclick/zoomclick.py` | Zoom and click tool |
 
 ---
 
