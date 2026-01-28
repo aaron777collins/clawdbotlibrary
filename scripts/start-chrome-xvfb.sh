@@ -3,7 +3,7 @@
 # See: ~/clawd/docs/chrome-xvfb-setup.md
 
 DISPLAY_NUM=:99
-USER_DATA_DIR=/home/ubuntu/.chrome-automation
+USER_DATA_DIR=$HOME/.chrome-automation
 DEBUG_PORT=9222
 
 export DISPLAY=$DISPLAY_NUM

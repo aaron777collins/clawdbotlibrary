@@ -5,7 +5,7 @@
 
 DISPLAY_NUM=":99"
 DEBUG_PORT=9222
-USER_DATA_DIR="/home/ubuntu/.chrome-automation"
+USER_DATA_DIR="$HOME/.chrome-automation"
 LOG_DIR="/tmp"
 EXTENSION_COORDS="1752 32"  # Clawdbot extension icon location (fallback coordinates)
 

@@ -207,7 +207,7 @@ DISPLAY=:99 zoomclick --click-center
 
 ## Complete Startup Script
 
-Save this as `/home/ubuntu/start-chrome-xvfb.sh`:
+Save this as `$HOME/start-chrome-xvfb.sh`:
 
 ```bash
 #!/bin/bash
@@ -274,7 +274,7 @@ echo "  ZoomClick:  DISPLAY=$DISPLAY_NUM zoomclick --start"
 
 Make it executable:
 ```bash
-chmod +x /home/ubuntu/start-chrome-xvfb.sh
+chmod +x $HOME/start-chrome-xvfb.sh
 ```
 
 ---
@@ -344,7 +344,7 @@ Xvfb :99 -screen 0 1920x1080x24 &
 
 ```bash
 # Start everything
-/home/ubuntu/start-chrome-xvfb.sh
+$HOME/start-chrome-xvfb.sh
 
 # Take screenshot
 DISPLAY=:99 import -window root /tmp/screenshot.png
@@ -361,7 +361,7 @@ pgrep chrome && echo "Chrome OK" || echo "Chrome DOWN"
 curl -s localhost:9222/json | head -1
 
 # Restart everything
-killall chrome fluxbox; /home/ubuntu/start-chrome-xvfb.sh
+killall chrome fluxbox; $HOME/start-chrome-xvfb.sh
 ```
 
 ---

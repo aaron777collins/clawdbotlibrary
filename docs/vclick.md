@@ -2,6 +2,8 @@
 
 > Direct coordinate clicking with vision support and template matching.
 
+**GitHub Repository:** https://github.com/aaron777collins/vclick
+
 ## 🎯 When to Use VClick vs ZoomClick
 
 | Use VClick when... | Use ZoomClick when... |
@@ -11,11 +13,21 @@
 | Template matching | Building reusable templates |
 | Direct automation | AI-assisted exploration |
 
-## 📋 Requirements
+## 📋 Installation
 
 ```bash
+# Install system dependencies
 sudo apt install -y scrot imagemagick xdotool python3-pip
-pip install pyautogui opencv-python numpy
+
+# Install Python dependencies
+pip install pyautogui opencv-python numpy pillow
+
+# Clone the repository
+git clone https://github.com/aaron777collins/vclick.git ~/tools/vclick
+cd ~/tools/vclick
+
+# Optional: Add to PATH
+sudo ln -sf $(pwd)/vclick.py /usr/local/bin/vclick
 ```
 
 ## 🚀 Basic Commands

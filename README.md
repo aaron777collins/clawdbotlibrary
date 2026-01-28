@@ -13,8 +13,10 @@ A collection of tools, scripts, and documentation for AI agent automation. This 
 ## 🛠️ Tools Included
 
 ### Screen Interaction
-- **zoomclick** - Iterative zoom navigation for precise UI clicking
-- **vclick** - Direct coordinate clicking with vision support
+| Tool | Description | GitHub |
+|------|-------------|--------|
+| **zoomclick** | Iterative zoom navigation for precise UI clicking | [EnhanceAndClick](https://github.com/aaron777collins/EnhanceAndClick) |
+| **vclick** | Direct coordinate clicking with vision support | [vclick](https://github.com/aaron777collins/vclick) |
 
 ### Browser Automation
 - **start-chrome-xvfb.sh** - Launch Chrome with Clawdbot extension on virtual display
